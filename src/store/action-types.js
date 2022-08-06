@@ -1,0 +1,1 @@
+export const SET_COMMUNITY_INFO = 'SET_COMMUNITY_INFO'
