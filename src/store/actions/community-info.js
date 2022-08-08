@@ -6,11 +6,17 @@ export const setCommunityInfo = (data) => ({
     data
 })
 
-export const getCommunityInfo = () => {
+export const getCommunityInfo = (page) => {
     return (dispatch) => {
-        getCommunityInfoRequest()
+        getCommunityInfoRequest(page)
             .then(data => {
                 dispatch(setCommunityInfo(data))
             })
+    }
+}
+
+export const addCommunityInfo = (data) => {
+    return (dispatch) => {
+        dispatch(setCommunityInfo(data))
     }
 }

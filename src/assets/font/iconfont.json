@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "11372693",
+      "name": "删除",
+      "font_class": "shanchu",
+      "unicode": "e8b6",
+      "unicode_decimal": 59574
+    },
+    {
+      "icon_id": "749758",
+      "name": "返回",
+      "font_class": "fanhui",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
       "icon_id": "653957",
       "name": "扫描2",
       "font_class": "saomiao",

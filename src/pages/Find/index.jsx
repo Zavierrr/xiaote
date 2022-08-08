@@ -4,7 +4,7 @@ import { Wrapper } from './style';
 import Community from './Community';
 import { Link, Outlet } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { getCommunityInfo } from '@/store/actions/community-info'
+import { getCommunityInfo, addCommunityInfo } from '@/store/actions/community-info'
 const tabItems = [
   { key: '0', title: '社区' },
   { key: '1', title: '小特交付' },
@@ -16,13 +16,13 @@ function Find(props) {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const { communityInfo } = props
-  const { getCommunityInfoDispatch } = props
+  const { getCommunityInfoDispatch, addCommunityInfoDispatch } = props
 
   // 初始化数据
-  useEffect(() => {
-    getCommunityInfoDispatch()
-    // console.log(communityInfo, '+++++++++');
-  }, [communityInfo])
+  // useEffect(() => {
+  //   getCommunityInfoDispatch(page)
+  //   console.log('+++++++++');
+  // }, [page])
 
   return (
     <Wrapper>
@@ -55,7 +55,10 @@ function Find(props) {
         }}
       >
         <Swiper.Item>
-          <Community communityInfo={communityInfo} />
+          <Community
+            communityInfo={communityInfo}
+            getCommunityInfoDispatch={getCommunityInfoDispatch}
+            addCommunityInfoDispatch={addCommunityInfoDispatch} />
         </Swiper.Item>
         <Swiper.Item>
           <div className='content'>小特交付</div>
@@ -75,16 +78,12 @@ const mapStateToProps = (state) => ({
   communityInfo: state.find.communityInfo
 })
 const mapDispatchToProps = (dispatch) => ({
-  getCommunityInfoDispatch() {
-    dispatch(getCommunityInfo())
+  getCommunityInfoDispatch(page) {
+    dispatch(getCommunityInfo(page))
+  },
+  addCommunityInfoDispatch(data) {
+    dispatch(addCommunityInfo(data))
   }
 })
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     getCommunityInfoDispatch() {
-//       dispatch(getCommunityInfo())
-//     }
-//   }
-// }
 
 export default connect(mapStateToProps, mapDispatchToProps)(React.memo(Find))

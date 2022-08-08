@@ -1,1 +1,4 @@
 export const SET_COMMUNITY_INFO = 'SET_COMMUNITY_INFO'
+export const SET_SEARCH_LIST = 'SET_SEARCH_LIST'
+export const SET_HOTWORD = 'SET_HOTWORD'
+export const SET_QUERY = 'SET_QUERY'

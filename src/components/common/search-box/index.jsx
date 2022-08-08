@@ -2,58 +2,84 @@ import React, { memo, useEffect, useState, useRef, useMemo } from "react";
 import styled from "styled-components";
 import style from '@/assets/global-style';
 import { debounce } from '@/api/utils';
+import { px2rem } from '@/assets/global-style'
 
 const SearchBoxWrapper = styled.div`
     display: flex;
     align-items: center;
-    /* box-sizing + width 占一屏或者一半 */
+    justify-content: center;
     box-sizing: border-box;
     width: 100%;
-    padding: 0 0.3rem;
-    padding-right: 1rem;
-    height: 2rem;
+    padding: 0 ${px2rem(20)};
     background: ${style["theme-color"]};
-    .icon-back{
-        font-size: 1.2rem;
-        color: ${style["font-color-light"]};
-    }
-    .box{
+    height: ${px2rem(50)};
+    .wrapper{
         flex: 1;
-        margin: 0 0.25rem;
-        line-height: 0.9rem;
-        background-color: ${style["theme-color"]};
-        color:${style["highlight-background-color"]};
-        font-size:${style["font-size-m"]};
-        outline: none;
-        border: none;
-        border-bottom: 1px solid ${style["border-color"]};
-        &::placeholder{
-            color:${style["font-color-light"]}
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgb(247,247,247);
+        border-radius: ${px2rem(20)};
+        .shanchu{
+            display: inline-block;
+            width: ${px2rem(40)};
+            text-align: center;
+            font-size: ${px2rem(12)};
+            i{
+                font-size: ${px2rem(18)};
+                color: #aeaeae;
+                line-height: ${px2rem(34)};
+            }
+        }
+        .sousuo{
+            width: ${px2rem(30)};
+            display: inline-block;
+            text-align: end;
+            i{
+                font-size: ${px2rem(20)};
+                color: #aeaeae;
+                line-height: ${px2rem(34)};
+            }
+        }
+        input{
+            flex: 1;
+            border: none;
+            background-color: rgb(247,247,247);
+            border-radius: ${px2rem(20)};
+            height: ${px2rem(30)};
+            padding-left: ${px2rem(6)};
+            outline: none;
+            border: none;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            letter-spacing: ${px2rem(0.5)};
+            &::placeholder{
+                color: #aeaeae;
+                font-size: ${px2rem(14)};
+                position: relative;
+            }
         }
     }
-    .icon-delete{
-        font-size: 16px;
-        color: ${style["background-color"]};
+    .cancel{
+        display: inline-block;
+        text-align: end;
+        width: ${px2rem(50)};
+        font-size: ${px2rem(15)};
+        letter-spacing: ${px2rem(0.5)};
     }
 `
 
 const SearchBox = (props) => {
     const queryRef = useRef();
-    // 解构父组件 props 分：状态 与 方法
     const { newQuery } = props;
     const { handleQuery, back } = props;
     // 防抖，只有按下回车才改变newProps
     const [query, setQuery] = useState('');
 
-    // 把父组件传来的函数封装一下
-    // useMemo 可以缓存 上一次函数计算的结果
     const handleChange = (e) => {
         let val = e.currentTarget.value
         setQuery(val)
     }
-    let handleQueryDebounce = useMemo(() => {
-        return debounce(handleQuery, 500)
-    }, [handleQuery])
 
     // mount（挂载）
     useEffect(() => {
@@ -61,22 +87,23 @@ const SearchBox = (props) => {
         queryRef.current.focus();
     }, [])
 
-    // 使用 useEffect 去更新
+    // useMemo 可以缓存 上一次函数计算的结果
+    let handleQueryDebounce = useMemo(() => {
+        return debounce(handleQuery, 500)
+    }, [handleQuery])
+
     useEffect(() => {
-        // query 更新
-        // let curQuery = query
         handleQueryDebounce(query)
     }, [query])
 
     useEffect(() => {
-        // mount 时候 执行 父组件 newQuery -> input query
+        // mount 时候执行父组件 newQuery -> input query
         let curQuery = query
         if (newQuery !== query) {
             curQuery = newQuery
             queryRef.current.value = newQuery
         }
         setQuery(curQuery)
-        // newQuery 更新时执行
     }, [newQuery])
 
     const clearQuery = () => {
@@ -89,20 +116,21 @@ const SearchBox = (props) => {
 
     return (
         <SearchBoxWrapper>
-            <i className="iconfont icon-back" onClick={() => back()}>&#xe655;</i>
-            <input
-                type="text"
-                className="box"
-                placeholder="搜索歌曲、歌手、专辑"
-                ref={queryRef}
-                onChange={handleChange} />
-            <i
-                className="iconfont icon-delete"
-                style={displayStyle}
-                onClick={clearQuery}
-            >
-                &#xe600;
-            </i>
+            <div className="wrapper">
+                <span className="sousuo">
+                    <i className="iconfont icon-sousuo"></i>
+                </span>
+                <input
+                    type="text"
+                    className="box"
+                    placeholder="充电桩"
+                    ref={queryRef}
+                    onChange={handleChange} />
+                <span className="shanchu">
+                    <i className="iconfont icon-shanchu" style={displayStyle} onClick={clearQuery}></i>
+                </span>
+            </div>
+            <span className="cancel" onClick={() => back()}>取消</span>
         </SearchBoxWrapper>
     )
 }

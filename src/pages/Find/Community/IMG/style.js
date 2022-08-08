@@ -5,7 +5,7 @@ export const Wrapper = styled.div`
     width: ${px2rem(108)};
     height: ${px2rem(108)};
     margin-right: ${px2rem(6)};
-    background-image: url(${props => props.imgUrl.url});
+    background-image: url(${props => props});
     background-size: cover;
     float: left;
     &:last-child{

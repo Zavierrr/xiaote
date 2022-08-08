@@ -29,13 +29,13 @@ export const getGMT = function (dateTime) {
     let Day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
     if (year > 0) {
         return `${Year}-${Moth}-${Day}`;
-    }else if (day > 0) {
+    } else if (day > 0) {
         return `${Moth}-${Day}`;
     } else if (hour > 0) {
         return hour + '小时前';
     } else if (minute > 0) {
         return minute + '分钟前';
-    } else if (second > 0) {
+    } else if (second > 10) {
         return second + '秒前';
     } else {
         return '刚刚';

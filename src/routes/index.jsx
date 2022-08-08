@@ -7,6 +7,7 @@ const Car = lazy(() => import('@/pages/Car'))
 const Map = lazy(() => import('@/pages/Map'))
 const Mine = lazy(() => import('@/pages/Mine'))
 const Shop = lazy(() => import('@/pages/Shop'))
+const Search = lazy(() => import('@/pages/Search'))
 
 export default function RoutesConfig() {
   return (
@@ -14,6 +15,7 @@ export default function RoutesConfig() {
       <Routes>
         <Route path='/' element={<Find />}></Route>
         <Route path='/find' element={<Find />}></Route>
+        <Route path="/search" element={<Search />} />
         <Route path='/map' element={<Map />}></Route>
         <Route path='/car' element={<Car />}></Route>
         <Route path='/shop' element={<Shop />}></Route>
