@@ -12,7 +12,7 @@ export const Wrapper = styled.div`
     justify-content: center;
     align-items: center;
     background-color: #fff;
-    z-index: 999;
+    z-index: 9;
     .header_title{
         width:${px2rem(80)};
         font-weight: 900;

@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import SearchBox from '@/components/common/search-box'
 import { Toast } from 'antd-mobile';
-import Lazyload, { forceCheck } from 'react-lazyload'
 import {
   Container,
   ShortcutWrapper,
@@ -11,17 +10,20 @@ import {
 } from './style'
 import { CSSTransition } from 'react-transition-group'
 import Scroll from '@/components/common/Scroll'
-import { getHotword, getSearchList, getQuery } from '@/store/actions/search';
+import { getHotword, getSearchList, getQuery, getHistoryKey, getDeleteAll } from '@/store/actions/search'
+import UserSection from '@/components/common/userSection';
 
 function Search(props) {
   const navigate = useNavigate();
   const [query, setQuery] = useState('')
   const [show, setShow] = useState(false);
-  const { hotword, queryList, searchList } = props
+  const { hotword, queryList, historyKey } = props
   const {
     getHotwordDispatch,
     getSearchListDispatch,
-    getQueryDispatch
+    getQueryDispatch,
+    getHistoryKeyDispatch,
+    getDeleteAllDispatch
   } = props
 
   const searchBack = () => {
@@ -30,25 +32,35 @@ function Search(props) {
 
   useEffect(() => {
     setShow(true)
+    getHistoryKeyDispatch()
     getHotwordDispatch()
     getSearchListDispatch()
-    // console.log(searchList, '1112323');
   }, [])
 
   const handleQuery = (q) => {
     setQuery(q)
   }
 
+  const deleteAll = () => {
+    getDeleteAllDispatch()
+    Toast.show({
+      content: '已清空搜索历史',
+      icon: 'success',
+      duration: 800
+    })
+  }
+
   useEffect(() => {
     if (query.trim()) {
-      // 有必要去请求
-      // changeEnterLoadingDispatch(true);
+      // 获取全部数据
       getSearchListDispatch()
+      // 搜索数据
       getQueryDispatch(query)
-      console.log(queryList, '2323');
+      getHistoryKeyDispatch(query)
     }
   }, [query])
 
+  // 热词
   const renderHotKey = () => {
     let list = hotword ? hotword : [];
     return (
@@ -66,46 +78,35 @@ function Search(props) {
     )
   }
 
+  // 搜索历史
+  const renderHistoryKey = () => {
+    let list = historyKey ? historyKey : [];
+    return (
+      <ul>
+        {
+          list.map((item, index) => {
+            return (
+              <li className="item" key={index} onClick={() => setQuery(item.data)}>
+                <span>{item.data}</span>
+              </li>
+            )
+          })
+        }
+      </ul>
+    )
+  }
+
+  // 搜索列表
   const renderQueryList = () => {
     let list = queryList ? queryList : [];
     return (
       list.map((item, index) => {
         return (
-          <li className="item" key={index}>
-            <span>{item.content}</span>
-            <span>{item.user.nickname}</span>
-          </li>
+          <UserSection item={item} key={index} />
         )
       })
     )
   }
-
-  // const renderSingers = () => {
-  //   let singers = suggestList.artists;
-  //   if (!singers || !singers.length) return;
-  //   console.log(singers)
-  //   return (
-  //     <List>
-  //       <h1 className="title">相关歌手</h1>
-  //       {
-  //         singers.map((item, index) => {
-  //           return (
-  //             <ListItem key={item.accountId + "" + index} onClick={() => gotoSingers(item.id)}>
-  //               <div className="img_wrapper">
-  //                 <Lazyload placeholder={
-  //                   <img src={singerImg} alt="music" width="100%" height="100%" />
-  //                 }>
-  //                   <img src={item.picUrl} alt="music" width="100%" height="100%" />
-  //                 </Lazyload>
-  //               </div>
-  //               <span className='name'>歌手：{item.name}</span>
-  //             </ListItem>
-  //           )
-  //         })
-  //       }
-  //     </List>
-  //   )
-  // }
 
   return (
     <CSSTransition
@@ -122,22 +123,32 @@ function Search(props) {
         <SearchBox
           back={searchBack}
           newQuery={query}
-          handleQuery={handleQuery}>
+          handleQuery={handleQuery}
+        >
         </SearchBox>
         <ShortcutWrapper show={!query}>
           <Scroll>
             <HotKey>
-              <h1 className="title">—— 热门搜索 ——</h1>
+              <h1 className="title">
+                <span> 搜索历史 </span>
+                <span onClick={deleteAll}>
+                  <i className='iconfont icon-shanchu'></i>
+                </span>
+              </h1>
+              {renderHistoryKey()}
+            </HotKey>
+            <HotKey>
+              <h1 className="title"> <span> 热门搜索 </span> </h1>
               {renderHotKey()}
             </HotKey>
           </Scroll>
         </ShortcutWrapper>
         <ShortcutWrapper show={query}>
-
           <div>
+            <h1 className="article">—— 相关文章 ——</h1>
             {renderQueryList()}
+            <span className="end"> 没有更多啦~ </span>
           </div>
-
         </ShortcutWrapper>
         {/* {enterLoading && <EnterLoading><Loading></Loading></EnterLoading>} */}
       </Container>
@@ -149,6 +160,7 @@ const mapStateToProps = (state) => ({
   hotword: state.search.hotword,
   queryList: state.search.queryList,
   searchList: state.search.searchList,
+  historyKey: state.search.historyKey
 })
 const mapDispatchToProps = (dispatch) => ({
   getHotwordDispatch() {
@@ -159,6 +171,12 @@ const mapDispatchToProps = (dispatch) => ({
   },
   getQueryDispatch(query) {
     dispatch(getQuery(query))
+  },
+  getHistoryKeyDispatch(data) {
+    dispatch(getHistoryKey(data))
+  },
+  getDeleteAllDispatch(data) {
+    dispatch(getDeleteAll(data))
   }
 })
 

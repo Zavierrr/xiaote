@@ -10,9 +10,10 @@ const SearchBoxWrapper = styled.div`
     justify-content: center;
     box-sizing: border-box;
     width: 100%;
-    padding: 0 ${px2rem(20)};
+    padding: ${px2rem(10)} ${px2rem(20)};
     background: ${style["theme-color"]};
     height: ${px2rem(50)};
+    z-index: 9999;
     .wrapper{
         flex: 1;
         display: flex;

@@ -40,3 +40,25 @@ export const getQuery = (query) => {
         dispatch(setQuery(query))
     }
 }
+
+export const setHistoryKey = (data) => ({
+    type: actionTypes.SET_HISTORY_KEY,
+    data
+})
+
+export const getHistoryKey = (data) => {
+    return (dispatch) => {
+        dispatch(setHistoryKey(data))
+    }
+}
+
+export const setDeleteAll = (data) => ({
+    type: actionTypes.SET_DELETE_ALL,
+    data
+})
+
+export const getDeleteAll = (data) => {
+    return (dispatch) => {
+        dispatch(setDeleteAll(data))
+    }
+}
