@@ -10,7 +10,7 @@ router.get("/community/:page", async (ctx, next) => {
     let limit = 10
     let { page } = ctx.params
     try {
-        const data = await fetchCommunityInfo(); // 后端远程调用：rpc 调用
+        const data = await fetchCommunityInfo(); 
         let resData = {
             code: "0", // 成功响应200
             msg: "success" // 成功 | 失败原因

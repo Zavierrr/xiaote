@@ -1,4 +1,4 @@
-// 独立配置文件，路由配置
+// 路由配置
 import React, { lazy, Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import Find from '@/pages/Find'

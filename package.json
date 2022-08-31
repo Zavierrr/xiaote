@@ -10,6 +10,7 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "@uiw/react-baidu-map": "^2.4.0",
     "antd-mobile": "^5.20.0",
     "axios": "^0.27.2",
     "better-scroll": "^2.4.2",

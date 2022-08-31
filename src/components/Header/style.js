@@ -30,7 +30,7 @@ export const Wrapper = styled.div`
             border-radius: ${px2rem(20)};
             height: ${px2rem(30)};
             padding-left: ${px2rem(36)};
-            
+            width: 80%;
             outline: none;
             &::placeholder{
                 color: #aeaeae;

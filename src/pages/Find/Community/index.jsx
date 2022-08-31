@@ -14,10 +14,6 @@ export default function Community(props) {
     const [hasMore, setHasMore] = useState(true)
     let [page, setPage] = useState(1)
 
-    const backtop = () => {
-        window.scrollTo(0, 0)
-    }
-
     useEffect(() => {
         if (!communityInfo.length) {
             getCommunityInfoDispatch(page)
@@ -41,7 +37,6 @@ export default function Community(props) {
             setHasMore(false)
         }
     }
-
 
     return (
         <Wrapper>

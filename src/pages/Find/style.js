@@ -23,4 +23,16 @@ export const Wrapper = styled.div`
         font-size: 24px;
         user-select: none;
     }
+    .backTop{
+        opacity: ${props => props.show ? 1 : 0};
+        position: fixed;
+        font-size: 12px;
+        bottom: ${px2rem(80)};
+        right: ${px2rem(20)};
+        border-radius: 50%;
+        z-index: 99;
+        background-color: rgb(255,221,107);
+        padding: 10px;
+        transition: all linear 0.2s
+    }
 `

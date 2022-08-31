@@ -1,3 +1,4 @@
+// 防抖
 export const debounce = (func, delay) => {
     let timer;
     return function (...args) {
@@ -17,6 +18,7 @@ export const getGMT = function (dateTime) {
         return '';
     }
     let date = new Date(parseInt(dateTime) * 1000);
+    // let time = date.getTime()
     let now = new Date().getTime();
     let second = Math.floor((now - date) / 1000);
     let minute = Math.floor(second / 60);
@@ -41,3 +43,13 @@ export const getGMT = function (dateTime) {
         return '刚刚';
     }
 };
+
+// Header、Footer组件是否显示
+export const isPathPartlyExisted = (path) => {
+    const arr = ['/map', '/search', '/car', '/mine', '/shop'];
+    // 任何情况 结果数组第二项都是arr里匹配的单项 
+    // '/find/123'  -> ['','find','123']
+    let pathRes = path.split('/')
+    if (pathRes[1] && arr.indexOf(`/${pathRes[1]}`) != -1) return true;
+    return false
+}

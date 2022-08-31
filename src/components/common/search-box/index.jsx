@@ -84,7 +84,7 @@ const SearchBox = (props) => {
 
     // mount（挂载）
     useEffect(() => {
-        // 挂载后 聚焦
+        // 聚焦
         queryRef.current.focus();
     }, [])
 

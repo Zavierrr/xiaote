@@ -1,10 +1,13 @@
 import React from 'react'
 import { Wrapper } from './style'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { Toast } from 'antd-mobile';
+import { isPathPartlyExisted } from '@/api/utils';
 
 export default function Header() {
     const navigate = useNavigate();
+    const { pathname } = useLocation();
+    if (isPathPartlyExisted(pathname)) return
     return (
         <Wrapper>
             <div className='header_title'>

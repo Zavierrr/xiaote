@@ -1,8 +1,8 @@
 // 配置请求对象
 import axios from 'axios'
-// 本地调试 dev 开发阶段
+
 export const baseUrl = "http://localhost:3300";
-// product 阶段
+
 const axiosInstance = axios.create({
     baseURL: baseUrl
 })

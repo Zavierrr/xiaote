@@ -1,4 +1,4 @@
-// node 版本 es6 晚 
+// node 版本，需要稳定，所以版本会落后一些
 const fetch = require("node-fetch"); // 在后端发送一个请求    rpc 调用 
 // 社区信息
 const URL_COMMUNITY = "https://lcen.xiaote.net/api/v1/communities";

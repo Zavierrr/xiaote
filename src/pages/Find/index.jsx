@@ -14,18 +14,25 @@ const tabItems = [
 function Find(props) {
   const swiperRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [show, setShow] = useState(false);
 
   const { communityInfo } = props
   const { getCommunityInfoDispatch, addCommunityInfoDispatch } = props
 
-  // 初始化数据
-  // useEffect(() => {
-  //   getCommunityInfoDispatch(page)
-  //   console.log('+++++++++');
-  // }, [page])
+  window.addEventListener('scroll', function () {
+    var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+    if (scrollTop > 200) {
+      setShow(true)
+    } else setShow(false)
+  })
+
+  const backTop = () => {
+    window.scrollTo(0, 0)
+  }
 
   return (
-    <Wrapper>
+    <Wrapper show={show}>
+      <div className='backTop' onClick={backTop}><i className='iconfont icon-bianji'></i></div>
       <Tabs
         className='find_Tabs'
         activeKey={tabItems[activeIndex].key}
@@ -42,6 +49,7 @@ function Find(props) {
         }}
       >
         {tabItems.map(item => (<Tabs.Tab title={item.title} key={item.key} />))}
+        <input />
       </Tabs>
 
       <Swiper
@@ -86,4 +94,4 @@ const mapDispatchToProps = (dispatch) => ({
   }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(React.memo(Find))
+export default connect(mapStateToProps, mapDispatchToProps)(Find)
